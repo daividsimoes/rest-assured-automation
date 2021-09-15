@@ -1,5 +1,6 @@
 package br.com.restassured.automation.request;
 
+import br.com.restassured.automation.util.UrlUtil;
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -10,62 +11,71 @@ public class RequestUtil {
 
     private HeaderUtil headerUtil;
 
+    private String url;
+
     public RequestUtil() {
 
         headerUtil = new HeaderUtil();
     }
 
-    public Response post(Headers headers, Object body, String endpoint) {
+    public Response post(Headers headers, Object body, String endpoint, Object... args) {
+
+        url = UrlUtil.buildUrl(endpoint, args);
 
         return given()
                 .contentType(ContentType.JSON)
                 .headers(headers)
                 .body(body)
-                .post(endpoint);
+                .post(url);
     }
 
-    public Response post(Object body, String endpoint) {
+    public Response post(Object body, String endpoint, Object... args) {
 
-        return post(headerUtil.getHeader(), body, endpoint);
+        return post(headerUtil.getHeader(), body, endpoint, args);
     }
 
-    public Response put(Headers headers, Object body, String endpoint) {
+    public Response put(Headers headers, Object body, String endpoint, Object... args) {
+
+        url = UrlUtil.buildUrl(endpoint, args);
 
         return given()
                 .contentType(ContentType.JSON)
                 .headers(headers)
                 .body(body)
-                .put(endpoint);
+                .put(url);
     }
 
-    public Response put(Object body, String endpoint) {
+    public Response put(Object body, String endpoint, Object... args) {
 
-        return put(headerUtil.getHeader(), body, endpoint);
+        return put(headerUtil.getHeader(), body, endpoint, args);
     }
 
-    public Response delete(Headers headers, String endpoint) {
+    public Response delete(Headers headers, String endpoint, Object... args) {
+
+        url = UrlUtil.buildUrl(endpoint, args);
 
         return given()
                 .contentType(ContentType.JSON)
                 .headers(headers)
-                .delete(endpoint);
+                .delete(url);
     }
 
-    public Response delete(String endpoint) {
+    public Response delete(String endpoint, Object... args) {
 
-        return delete(headerUtil.getHeader(), endpoint);
+        return delete(headerUtil.getHeader(), endpoint, args);
     }
 
-    public Response get(Headers headers, String endpoint) {
+    public Response get(Headers headers, String endpoint, Object... args) {
 
+        url = UrlUtil.buildUrl(endpoint, args);
         return given()
                 .contentType(ContentType.JSON)
                 .headers(headers)
-                .get(endpoint);
+                .get(url);
     }
 
-    public Response get(String endpoint) {
+    public Response get(String endpoint, Object... args) {
 
-        return get(headerUtil.getHeader(), endpoint);
+        return get(headerUtil.getHeader(), endpoint, args);
     }
 }
