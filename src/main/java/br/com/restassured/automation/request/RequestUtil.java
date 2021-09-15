@@ -1,4 +1,4 @@
-package br.com.restassured.automation.util;
+package br.com.restassured.automation.request;
 
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
