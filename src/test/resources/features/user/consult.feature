@@ -29,3 +29,63 @@ Feature: Consult API
     When I call find user API using query admin "false"
     Then should return non admin user
     And status code should be 200
+
+  Scenario: Consult invalid user account by Admin query
+    Given I have one user account
+    When I call find user API using query admin "test"
+    Then should return Admin message error
+    And status code should be 400
+
+  Scenario: Consult user account by query name
+    Given I have one user account
+    When I call find user API using query name
+    Then should return user
+    And status code should be 200
+
+  Scenario: Consult invalid user account by query name
+    Given I call find user API using invalid name as query name
+    Then should not return users
+    And status code should be 200
+
+  Scenario: Consult user account by query email
+    Given I have one user account
+    When I call find user API using query email
+    Then should return user
+    And status code should be 200
+
+  Scenario: Consult non existing user account by query email
+    Given I call find user API using non existing email as query email
+    Then should not return users
+    And status code should be 200
+
+  Scenario: Consult invalid user account by query email
+    Given I call find user API using invalid email as query email
+    Then should return email message error
+    And status code should be 400
+
+  Scenario: Consult user account by query password
+    Given I have one user account
+    When I call find user API using query password
+    Then should return user
+    And status code should be 200
+
+  Scenario: Consult non existing user account by query password
+    Given I call find user API using non existing password as query password
+    Then should not return users
+    And status code should be 200
+
+
+
+
+
+
+  Scenario: Consult user account by all queries
+    Given I have one user account
+    When I call find user API using all queries
+    Then should return user
+    And status code should be 200
+
+  Scenario: Consult non existing user account by all queries usind invalid Id
+    Given I call find user API using invalid id with all queries
+    Then should not return users
+    And status code should be 200

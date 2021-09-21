@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class ResponseObject implements Serializable {
+public class ResponseObject extends ResponseError implements Serializable {
 
     private int statusCode;
 }

@@ -13,10 +13,12 @@ public class UserResponse extends ResponseObject implements Serializable {
 
     private String nome;
 
+    @JsonProperty("email")
     private String email;
 
     private String password;
 
+    @JsonProperty("administrador")
     private String administrador;
 
     @JsonProperty("_id")
