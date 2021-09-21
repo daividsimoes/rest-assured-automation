@@ -6,6 +6,7 @@ import br.com.restassured.automation.model.request.user.AddUserRequest;
 import br.com.restassured.automation.model.response.user.AddUserResponse;
 import br.com.restassured.automation.model.response.user.UserListResponse;
 import br.com.restassured.automation.request.RequestUtil;
+import br.com.restassured.automation.service.UserService;
 import br.com.restassured.automation.util.FakerUtil;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UserStepDefinition {
 
-    private RequestUtil requestUtil;
+    private UserService userService;
 
     private AddUserRequest addUserRequest;
 
@@ -42,7 +43,7 @@ public class UserStepDefinition {
     @Before("@init")
     public void before() {
 
-        requestUtil = new RequestUtil();
+        userService = new UserService();
     }
 
     @Given("I have one user account")
@@ -51,11 +52,7 @@ public class UserStepDefinition {
         AddUserFactory addUserFactory = new AddUserFactory();
         addUserRequest = addUserFactory.buildAddUserRequest();
 
-        addUserResponse = requestUtil.post(
-                addUserRequest,
-                AddUserResponse.class,
-                USER
-        );
+        addUserResponse = userService.postAddUser(addUserRequest);
     }
 
     @Given("I have one Admin user account")
@@ -64,61 +61,38 @@ public class UserStepDefinition {
         AddUserFactory addUserFactory = new AddUserFactory();
         addUserRequest = addUserFactory.buildAdminAddUserRequest();
 
-        addUserResponse = requestUtil.post(
-                addUserRequest,
-                AddUserResponse.class,
-                USER
-        );
+        addUserResponse = userService.postAddUser(addUserRequest);
     }
 
     @Given("I call find user API using invalid id as query id")
     public void i_call_find_user_API_using_invalid_id_as_query_id() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_ID,
-                new FakerUtil().generateRandomUuid()
-        );
+        userListResponse = userService.getUserListById(new FakerUtil().generateRandomUuid());
+
     }
 
     @Given("I call find user API using invalid name as query name")
     public void i_call_find_user_API_using_invalid_name_as_query_name() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_NAME,
-                new FakerUtil().generateRandomName()
-        );
+        userListResponse = userService.getUserListByName(new FakerUtil().generateRandomName());
     }
 
     @Given("I call find user API using non existing email as query email")
     public void i_call_find_user_API_using_non_existing_email_as_query_email() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_EMAIL,
-                new FakerUtil().generateRandomEmail()
-        );
+        userListResponse = userService.getUserListByEmail(new FakerUtil().generateRandomEmail());
     }
 
     @Given("I call find user API using invalid email as query email")
     public void i_call_find_user_API_using_invalid_email_as_query_email() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_EMAIL,
-                new FakerUtil().generateInvalidEmail()
-        );
+        userListResponse = userService.getUserListByEmail(new FakerUtil().generateInvalidEmail());
     }
 
     @Given("I call find user API using non existing password as query password")
     public void i_call_find_user_API_using_non_existing_password_as_query_password() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_PASSWORD,
-                new FakerUtil().generateRandomPassword()
-        );
+        userListResponse = userService.getUserListByPassword(new FakerUtil().generateRandomPassword());
     }
 
     @Given("I call find user API using invalid id with all queries")
@@ -126,88 +100,54 @@ public class UserStepDefinition {
 
         FakerUtil fakerUtil = new FakerUtil();
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_ALL_QUERY,
-                fakerUtil.generateRandomUuid(),
-                fakerUtil.generateRandomName(),
-                fakerUtil.generateRandomEmail(),
-                fakerUtil.generateRandomPassword(),
-                "false"
+        userListResponse = userService.getUserListByAllQueries(fakerUtil.generateRandomUuid(),
+                fakerUtil.generateRandomName(), fakerUtil.generateRandomEmail(),
+                fakerUtil.generateRandomPassword(), "false"
         );
     }
 
     @When("I call find user API")
     public void i_call_find_user_API() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER
-        );
+        userListResponse = userService.getUserList();
     }
 
     @When("I call find user API using query id")
     public void i_call_find_user_API_using_query_id() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_ID,
-                addUserResponse.getId()
-        );
+        userListResponse = userService.getUserListById(addUserResponse.getId());
     }
 
     @When("I call find user API using query admin {string}")
     public void i_call_find_user_API_using_query_admin(String admin) {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_ADMIN,
-                admin
-        );
+        userListResponse = userService.getUserListByAdmin(admin);
     }
 
     @When("I call find user API using query name")
     public void i_call_find_user_API_using_query_name() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_NAME,
-                addUserRequest.getNome()
-        );
+        userListResponse = userService.getUserListByName(addUserRequest.getNome());
     }
 
     @When("I call find user API using query email")
     public void i_call_find_user_API_using_query_email() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_EMAIL,
-                addUserRequest.getEmail()
-        );
+        userListResponse = userService.getUserListByEmail(addUserRequest.getEmail());
     }
 
     @When("I call find user API using query password")
     public void i_call_find_user_API_using_query_password() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_QUERY_PASSWORD,
-                addUserRequest.getPassword()
-        );
+        userListResponse = userService.getUserListByPassword(addUserRequest.getPassword());
     }
 
     @When("I call find user API using all queries")
     public void i_call_find_user_API_using_all_queries() {
 
-        userListResponse = requestUtil.get(
-                UserListResponse.class,
-                USER_ALL_QUERY,
-                addUserResponse.getId(),
-                addUserRequest.getNome(),
-                addUserRequest.getEmail(),
-                addUserRequest.getPassword(),
-                addUserRequest.getAdministrador()
-        );
+        userListResponse = userService.getUserListByAllQueries(addUserResponse.getId(),
+                addUserRequest.getNome(), addUserRequest.getEmail(), addUserRequest.getPassword(),
+                addUserRequest.getAdministrador());
     }
 
     @Then("status code should be {int}")
