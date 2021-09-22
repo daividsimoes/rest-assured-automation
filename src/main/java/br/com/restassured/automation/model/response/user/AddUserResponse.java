@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Setter
 public class AddUserResponse extends ResponseObject implements Serializable {
 
+    @JsonProperty("message")
     private String message;
 
     @JsonProperty("_id")

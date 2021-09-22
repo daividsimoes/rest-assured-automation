@@ -5,7 +5,7 @@ import br.com.restassured.automation.factory.AddUserFactory;
 import br.com.restassured.automation.model.request.user.AddUserRequest;
 import br.com.restassured.automation.model.response.user.AddUserResponse;
 import br.com.restassured.automation.model.response.user.UserListResponse;
-import br.com.restassured.automation.request.RequestUtil;
+import br.com.restassured.automation.model.response.user.UserResponse;
 import br.com.restassured.automation.service.UserService;
 import br.com.restassured.automation.util.FakerUtil;
 import cucumber.api.java.Before;
@@ -14,11 +14,12 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class UserStepDefinition {
 
     private UserService userService;
+
+    private AddUserFactory addUserFactory;
 
     private AddUserRequest addUserRequest;
 
@@ -26,77 +27,61 @@ public class UserStepDefinition {
 
     private UserListResponse userListResponse;
 
-    private final String USER = "/usuarios";
-
-    private final String USER_QUERY_ID = "/usuarios?_id={0}";
-
-    private final String USER_QUERY_ADMIN = "/usuarios?administrador={0}";
-
-    private final String USER_QUERY_NAME = "/usuarios?nome={0}";
-
-    private final String USER_QUERY_EMAIL = "/usuarios?email={0}";
-
-    private final String USER_QUERY_PASSWORD = "/usuarios?password={0}";
-
-    private final String USER_ALL_QUERY = "/usuarios?_id={0}&nome={1}&email={2}&password={3}&administrador={4}";
+    private UserResponse userResponse;
 
     @Before("@init")
     public void before() {
 
         userService = new UserService();
+        addUserFactory = new AddUserFactory();
     }
 
     @Given("I have one user account")
     public void i_have_one_user_account() {
 
-        AddUserFactory addUserFactory = new AddUserFactory();
         addUserRequest = addUserFactory.buildAddUserRequest();
-
         addUserResponse = userService.postAddUser(addUserRequest);
     }
 
     @Given("I have one Admin user account")
     public void i_have_one_Admin_user_account() {
 
-        AddUserFactory addUserFactory = new AddUserFactory();
         addUserRequest = addUserFactory.buildAdminAddUserRequest();
-
         addUserResponse = userService.postAddUser(addUserRequest);
     }
 
-    @Given("I call find user API using invalid id as query id")
-    public void i_call_find_user_API_using_invalid_id_as_query_id() {
+    @Given("I call find user list API using invalid id as query id")
+    public void i_call_find_user_list_API_using_invalid_id_as_query_id() {
 
         userListResponse = userService.getUserListById(new FakerUtil().generateRandomUuid());
-
     }
 
-    @Given("I call find user API using invalid name as query name")
-    public void i_call_find_user_API_using_invalid_name_as_query_name() {
+    @Given("I call find user list API using invalid name as query name")
+    public void i_call_find_user_list_API_using_invalid_name_as_query_name() {
 
         userListResponse = userService.getUserListByName(new FakerUtil().generateRandomName());
     }
 
-    @Given("I call find user API using non existing email as query email")
-    public void i_call_find_user_API_using_non_existing_email_as_query_email() {
+    @Given("I call find user list API using non existing email as query email")
+    public void i_call_find_user_list_API_using_non_existing_email_as_query_email() {
 
         userListResponse = userService.getUserListByEmail(new FakerUtil().generateRandomEmail());
     }
 
-    @Given("I call find user API using invalid email as query email")
-    public void i_call_find_user_API_using_invalid_email_as_query_email() {
+    @Given("I call find user list API using invalid email as query email")
+    public void i_call_find_user_list_API_using_invalid_email_as_query_email() {
 
         userListResponse = userService.getUserListByEmail(new FakerUtil().generateInvalidEmail());
     }
 
-    @Given("I call find user API using non existing password as query password")
-    public void i_call_find_user_API_using_non_existing_password_as_query_password() {
+    @Given("I call find user list API using non existing password as query password")
+    public void i_call_find_user_list_API_using_non_existing_password_as_query_password() {
 
         userListResponse = userService.getUserListByPassword(new FakerUtil().generateRandomPassword());
     }
 
-    @Given("I call find user API using invalid id with all queries")
-    public void i_call_find_user_API_using_invalid_id_with_all_queries() {
+    @Given("I call find user list API using invalid id with all queries")
+    public void i_call_find_user_list_API_using_invalid_id_with_all_queries() {
 
         FakerUtil fakerUtil = new FakerUtil();
 
@@ -106,43 +91,55 @@ public class UserStepDefinition {
         );
     }
 
-    @When("I call find user API")
-    public void i_call_find_user_API() {
+    @Given("I call find user API using invalid id")
+    public void i_call_find_user_API_using_invalid_id() {
+
+        userResponse = userService.getUser(new FakerUtil().generateRandomUuid());
+    }
+
+    @Given("I build one user account")
+    public void i_build_one_user_account() {
+
+        addUserRequest = addUserFactory.buildAddUserRequest();
+    }
+
+    @When("I call find user list API")
+    public void i_call_find_user_list_API() {
 
         userListResponse = userService.getUserList();
     }
 
-    @When("I call find user API using query id")
-    public void i_call_find_user_API_using_query_id() {
+    @When("I call find user list API using query id")
+    public void i_call_find_user_list_API_using_query_id() {
 
         userListResponse = userService.getUserListById(addUserResponse.getId());
     }
 
-    @When("I call find user API using query admin {string}")
-    public void i_call_find_user_API_using_query_admin(String admin) {
+    @When("I call find user list API using query admin {string}")
+    public void i_call_find_user_list_API_using_query_admin(String admin) {
 
         userListResponse = userService.getUserListByAdmin(admin);
     }
 
-    @When("I call find user API using query name")
-    public void i_call_find_user_API_using_query_name() {
+    @When("I call find user list API using query name")
+    public void i_call_find_user_list_API_using_query_name() {
 
         userListResponse = userService.getUserListByName(addUserRequest.getNome());
     }
 
-    @When("I call find user API using query email")
-    public void i_call_find_user_API_using_query_email() {
+    @When("I call find user list API using query email")
+    public void i_call_find_user_list_API_using_query_email() {
 
         userListResponse = userService.getUserListByEmail(addUserRequest.getEmail());
     }
 
-    @When("I call find user API using query password")
+    @When("I call find user list API using query password")
     public void i_call_find_user_API_using_query_password() {
 
         userListResponse = userService.getUserListByPassword(addUserRequest.getPassword());
     }
 
-    @When("I call find user API using all queries")
+    @When("I call find user list API using all queries")
     public void i_call_find_user_API_using_all_queries() {
 
         userListResponse = userService.getUserListByAllQueries(addUserResponse.getId(),
@@ -150,10 +147,34 @@ public class UserStepDefinition {
                 addUserRequest.getAdministrador());
     }
 
-    @Then("status code should be {int}")
-    public void status_code_should_be(int code) {
+    @When("I call find user API")
+    public void i_call_find_user_API() {
+
+        userResponse = userService.getUser(addUserResponse.getId());
+    }
+
+    @When("I call add user API")
+    public void i_call_add_user_API() {
+
+        addUserResponse = userService.postAddUser(addUserRequest);
+    }
+
+    @Then("status code should be {int} for user list response")
+    public void status_code_should_be_for_user_list_response(int code) {
 
         assertEquals(code, userListResponse.getStatusCode());
+    }
+
+    @Then("status code should be {int} for user response")
+    public void status_code_should_be_for_user_response(int code) {
+
+        assertEquals(code, userResponse.getStatusCode());
+    }
+
+    @Then("status code should be {int} for add user response")
+    public void status_code_should_be_for_add_user_response(int code) {
+
+        assertEquals(code, addUserResponse.getStatusCode());
     }
 
     @Then("should return user list")
@@ -166,21 +187,6 @@ public class UserStepDefinition {
             assertNotNull(user.getEmail());
             assertNotNull(user.getPassword());
             assertNotNull(user.getAdministrador());
-        });
-    }
-
-    @Then("should return user")
-    public void should_return_user() {
-
-        assertEquals(userListResponse.getQuantidade(), userListResponse.getUsuarios().size());
-
-        userListResponse.getUsuarios().forEach(user -> {
-            assertEquals(addUserRequest.getNome(), user.getNome());
-            assertEquals(addUserRequest.getEmail(), user.getEmail());
-            assertEquals(addUserRequest.getPassword(), user.getPassword());
-            assertEquals(addUserRequest.getAdministrador(), user.getAdministrador());
-
-            assertEquals(addUserResponse.getId(), user.getId());
         });
     }
 
@@ -218,5 +224,28 @@ public class UserStepDefinition {
     public void should_return_email_message_error() {
 
         assertEquals(Message.EMAIL_INVALIDO.getMessage(), userListResponse.getEmailMessageError());
+    }
+
+    @Then("should return user")
+    public void should_return_user() {
+
+        assertEquals(addUserRequest.getNome(), userResponse.getNome());
+        assertEquals(addUserRequest.getEmail(), userResponse.getEmail());
+        assertEquals(addUserRequest.getPassword(), userResponse.getPassword());
+        assertEquals(addUserRequest.getAdministrador(), userResponse.getAdministrador());
+        assertEquals(addUserResponse.getId(), userResponse.getId());
+    }
+
+    @Then("should return not found user message error")
+    public void should_return_not_found_user_message_error() {
+
+        assertEquals(Message.USUARIO_NAO_ENCONTRADO.getMessage(), userResponse.getMessageError());
+    }
+
+    @Then("should add user successfully")
+    public void should_add_user_successfully() {
+
+        assertNotNull(addUserResponse.getId());
+        assertEquals(Message.CADASTRO_COM_SUCESSO.getMessage(), addUserResponse.getMessage());
     }
 }

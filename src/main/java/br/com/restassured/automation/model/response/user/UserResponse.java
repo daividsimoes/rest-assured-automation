@@ -11,11 +11,13 @@ import java.io.Serializable;
 @Setter
 public class UserResponse extends ResponseObject implements Serializable {
 
+    @JsonProperty("nome")
     private String nome;
 
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("password")
     private String password;
 
     @JsonProperty("administrador")

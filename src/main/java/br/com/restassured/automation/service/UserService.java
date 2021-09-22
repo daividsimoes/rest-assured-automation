@@ -3,6 +3,7 @@ package br.com.restassured.automation.service;
 import br.com.restassured.automation.model.request.user.AddUserRequest;
 import br.com.restassured.automation.model.response.user.AddUserResponse;
 import br.com.restassured.automation.model.response.user.UserListResponse;
+import br.com.restassured.automation.model.response.user.UserResponse;
 import br.com.restassured.automation.request.RequestUtil;
 
 public class UserService {
@@ -10,6 +11,8 @@ public class UserService {
     private RequestUtil requestUtil;
 
     private final String USER = "/usuarios";
+
+    private final String USER_ID = "/usuarios/{0}";
 
     private final String USER_QUERY_ID = "/usuarios?_id={0}";
 
@@ -70,5 +73,10 @@ public class UserService {
         return requestUtil.get(UserListResponse.class, USER_ALL_QUERY, id, nome, email, password,
                 administrador
         );
+    }
+
+    public UserResponse getUser(String id) {
+
+        return requestUtil.get(UserResponse.class, USER_ID, id);
     }
 }

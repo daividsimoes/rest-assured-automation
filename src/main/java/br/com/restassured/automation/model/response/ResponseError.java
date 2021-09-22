@@ -15,4 +15,7 @@ public class ResponseError implements Serializable {
 
     @JsonProperty("email")
     private String emailMessageError;
+
+    @JsonProperty("message")
+    private String messageError;
 }
