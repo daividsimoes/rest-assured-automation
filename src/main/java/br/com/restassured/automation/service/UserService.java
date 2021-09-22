@@ -1,7 +1,7 @@
 package br.com.restassured.automation.service;
 
-import br.com.restassured.automation.model.request.user.AddUserRequest;
-import br.com.restassured.automation.model.response.user.AddUserResponse;
+import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
+import br.com.restassured.automation.model.response.user.AddOrUpdateUserResponse;
 import br.com.restassured.automation.model.response.user.UserListResponse;
 import br.com.restassured.automation.model.response.user.UserResponse;
 import br.com.restassured.automation.request.RequestUtil;
@@ -32,9 +32,14 @@ public class UserService {
         requestUtil = new RequestUtil();
     }
 
-    public AddUserResponse postAddUser(AddUserRequest addUserRequest) {
+    public AddOrUpdateUserResponse addUser(AddOrUpdateUserRequest addOrUpdateUserRequest) {
 
-        return requestUtil.post(addUserRequest, AddUserResponse.class, USER);
+        return requestUtil.post(addOrUpdateUserRequest, AddOrUpdateUserResponse.class, USER);
+    }
+
+    public AddOrUpdateUserResponse updateUser(AddOrUpdateUserRequest addOrUpdateUserRequest, String id) {
+
+        return requestUtil.put(addOrUpdateUserRequest, AddOrUpdateUserResponse.class, USER_ID, id);
     }
 
     public UserListResponse getUserList() {
@@ -75,7 +80,7 @@ public class UserService {
         );
     }
 
-    public UserResponse getUser(String id) {
+    public UserResponse findUser(String id) {
 
         return requestUtil.get(UserResponse.class, USER_ID, id);
     }

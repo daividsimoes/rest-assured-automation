@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-public class AddUserRequest {
+public class AddOrUpdateUserRequest {
 
     private String nome;
 

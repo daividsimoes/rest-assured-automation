@@ -33,7 +33,7 @@ Feature: Consult user list API
   Scenario: Consult invalid user account by Admin query
     Given I have one user account
     When I call find user list API using query admin "test"
-    Then should return Admin message error
+    Then should return user list Admin message error
     And status code should be 400 for user list response
 
   Scenario: Consult user account by query name
@@ -60,7 +60,7 @@ Feature: Consult user list API
 
   Scenario: Consult invalid user account by query email
     Given I call find user list API using invalid email as query email
-    Then should return email message error
+    Then should return user list email message error
     And status code should be 400 for user list response
 
   Scenario: Consult user account by query password

@@ -9,11 +9,17 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class AddUserResponse extends ResponseObject implements Serializable {
+public class AddOrUpdateUserResponse extends ResponseObject implements Serializable {
 
-    @JsonProperty("message")
     private String message;
 
     @JsonProperty("_id")
     private String id;
+
+    @JsonProperty("message")
+    public void setMessage(String message) {
+
+        this.message = message;
+        super.setMessageError(message);
+    }
 }

@@ -36,7 +36,7 @@ public class RequestUtil {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .headers(headers)
-                .body(body)
+                .body(JsonUtil.convertToJson(body))
                 .post(url);
 
         log.info("RESPONSE -> StatusCode: {}", response.getStatusCode());
@@ -64,7 +64,7 @@ public class RequestUtil {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .headers(headers)
-                .body(body)
+                .body(JsonUtil.convertToJson(body))
                 .put(url);
 
         log.info("RESPONSE -> StatusCode: {}", response.getStatusCode());

@@ -1,15 +1,15 @@
 package br.com.restassured.automation.factory;
 
-import br.com.restassured.automation.model.request.user.AddUserRequest;
+import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
 import br.com.restassured.automation.util.FakerUtil;
 
 public class AddUserFactory {
 
     FakerUtil fakerUtil = new FakerUtil();
 
-    public AddUserRequest buildAddUserRequest() {
+    public AddOrUpdateUserRequest buildAddUserRequest() {
 
-        return AddUserRequest.builder()
+        return AddOrUpdateUserRequest.builder()
                 .nome(fakerUtil.generateRandomName())
                 .email(fakerUtil.generateRandomEmail())
                 .password(fakerUtil.generateRandomPassword())
@@ -17,9 +17,9 @@ public class AddUserFactory {
                 .build();
     }
 
-    public AddUserRequest buildAdminAddUserRequest() {
+    public AddOrUpdateUserRequest buildAdminAddUserRequest() {
 
-        return AddUserRequest.builder()
+        return AddOrUpdateUserRequest.builder()
                 .nome(fakerUtil.generateRandomName())
                 .email(fakerUtil.generateRandomEmail())
                 .password(fakerUtil.generateRandomPassword())
@@ -27,9 +27,9 @@ public class AddUserFactory {
                 .build();
     }
 
-    public AddUserRequest buildAddUserRequestWithEmailt(String email) {
+    public AddOrUpdateUserRequest buildAddUserRequestWithEmail(String email) {
 
-        return AddUserRequest.builder()
+        return AddOrUpdateUserRequest.builder()
                 .nome(fakerUtil.generateRandomName())
                 .email(email)
                 .password(fakerUtil.generateRandomPassword())
@@ -37,9 +37,9 @@ public class AddUserFactory {
                 .build();
     }
 
-    public AddUserRequest buildEmptyUserRequest() {
+    public AddOrUpdateUserRequest buildEmptyUserRequest() {
 
-        return AddUserRequest.builder()
+        return AddOrUpdateUserRequest.builder()
                 .nome("")
                 .email("")
                 .password("")
@@ -47,8 +47,8 @@ public class AddUserFactory {
                 .build();
     }
 
-    public AddUserRequest buildBlankUserRequest() {
+    public AddOrUpdateUserRequest buildBlankUserRequest() {
 
-        return AddUserRequest.builder().build();
+        return AddOrUpdateUserRequest.builder().build();
     }
 }
