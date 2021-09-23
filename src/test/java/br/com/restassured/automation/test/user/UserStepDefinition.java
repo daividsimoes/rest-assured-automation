@@ -133,6 +133,14 @@ public class UserStepDefinition {
         addOrUpdateUserRequest = addUserFactory.buildEmptyUserRequest();
     }
 
+    @Given("I have one user account updated")
+    public void i_have_one_user_account_updated() {
+
+        addOrUpdateUserResponse = userService.addUser(addUserFactory.buildAddUserRequest());
+        addOrUpdateUserRequest = addUserFactory.buildAddUserRequest();
+        userService.updateUser(addOrUpdateUserRequest, addOrUpdateUserResponse.getId());
+    }
+
     @When("I call find user list API")
     public void i_call_find_user_list_API() {
 
@@ -173,8 +181,8 @@ public class UserStepDefinition {
     public void i_call_find_user_API_using_all_queries() {
 
         userListResponse = userService.getUserListByAllQueries(addOrUpdateUserResponse.getId(),
-                addOrUpdateUserRequest.getNome(), addOrUpdateUserRequest.getEmail(), addOrUpdateUserRequest.getPassword(),
-                addOrUpdateUserRequest.getAdministrador());
+                addOrUpdateUserRequest.getNome(), addOrUpdateUserRequest.getEmail(),
+                addOrUpdateUserRequest.getPassword(), addOrUpdateUserRequest.getAdministrador());
     }
 
     @When("I call find user API")
@@ -192,7 +200,8 @@ public class UserStepDefinition {
     @When("I call update user API")
     public void i_call_update_user_API() {
 
-        addOrUpdateUserResponse = userService.updateUser(addOrUpdateUserRequest, addOrUpdateUserResponse.getId());
+        String id = addOrUpdateUserResponse.getId();
+        addOrUpdateUserResponse = userService.updateUser(addOrUpdateUserRequest, id);
     }
 
     @When("I call update user API with non existing id")

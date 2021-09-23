@@ -34,3 +34,15 @@ Feature: Update user API
     When I call update user API
     Then should return add user empty fields message error
     And status code should be 400 for add user response
+
+  Scenario: Consult updated user account
+    Given I have one user account updated
+    When I call find user API
+    Then should return user
+    And status code should be 200 for user response
+
+  Scenario: Consult updated user account list by query id
+    Given I have one user account updated
+    When I call find user list API using query id
+    Then should return user list
+    And status code should be 200 for user list response

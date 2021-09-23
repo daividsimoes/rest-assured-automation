@@ -80,7 +80,7 @@ Feature: Consult user list API
     Then should return user list
     And status code should be 200 for user list response
 
-  Scenario: Consult non existing user account by all queries usind invalid Id
+  Scenario: Consult non existing user account by all queries using invalid Id
     Given I call find user list API using invalid id with all queries
     Then should not return users
     And status code should be 200 for user list response
