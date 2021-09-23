@@ -2,6 +2,7 @@ package br.com.restassured.automation.service;
 
 import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
 import br.com.restassured.automation.model.response.user.AddOrUpdateUserResponse;
+import br.com.restassured.automation.model.response.user.DeleteUserResponse;
 import br.com.restassured.automation.model.response.user.UserListResponse;
 import br.com.restassured.automation.model.response.user.UserResponse;
 import br.com.restassured.automation.request.RequestUtil;
@@ -40,6 +41,11 @@ public class UserService {
     public AddOrUpdateUserResponse updateUser(AddOrUpdateUserRequest addOrUpdateUserRequest, String id) {
 
         return requestUtil.put(addOrUpdateUserRequest, AddOrUpdateUserResponse.class, USER_ID, id);
+    }
+
+    public DeleteUserResponse deleteUser(String id) {
+
+        return requestUtil.delete(DeleteUserResponse.class, USER_ID, id);
     }
 
     public UserListResponse getUserList() {

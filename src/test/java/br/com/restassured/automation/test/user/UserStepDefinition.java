@@ -4,6 +4,7 @@ import br.com.restassured.automation.enums.Message;
 import br.com.restassured.automation.factory.AddUserFactory;
 import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
 import br.com.restassured.automation.model.response.user.AddOrUpdateUserResponse;
+import br.com.restassured.automation.model.response.user.DeleteUserResponse;
 import br.com.restassured.automation.model.response.user.UserListResponse;
 import br.com.restassured.automation.model.response.user.UserResponse;
 import br.com.restassured.automation.service.UserService;
@@ -28,6 +29,8 @@ public class UserStepDefinition {
     private UserListResponse userListResponse;
 
     private UserResponse userResponse;
+
+    private DeleteUserResponse deleteUserResponse;
 
     @Before("@init")
     public void before() {
@@ -141,6 +144,19 @@ public class UserStepDefinition {
         userService.updateUser(addOrUpdateUserRequest, addOrUpdateUserResponse.getId());
     }
 
+    @Given("I have one user account deleted")
+    public void i_have_one_user_account_deleted() {
+
+        addOrUpdateUserResponse = userService.addUser(addUserFactory.buildAddUserRequest());
+        userService.deleteUser(addOrUpdateUserResponse.getId());
+    }
+
+    @Given("I call delete user API using invalid id")
+    public void i_call_delete_user_API_using_invalid_id() {
+
+        deleteUserResponse = userService.deleteUser(new FakerUtil().generateRandomUuid());
+    }
+
     @When("I call find user list API")
     public void i_call_find_user_list_API() {
 
@@ -208,6 +224,12 @@ public class UserStepDefinition {
     public void i_call_update_user_API_with_non_existing_id() {
 
         addOrUpdateUserResponse = userService.updateUser(addOrUpdateUserRequest, new FakerUtil().generateRandomUuid());
+    }
+
+    @When("I call delete user API")
+    public void i_call_delete_user_API() {
+
+        deleteUserResponse = userService.deleteUser(addOrUpdateUserResponse.getId());
     }
 
     @Then("status code should be {int} for user list response")
@@ -334,5 +356,23 @@ public class UserStepDefinition {
     public void should_update_user_successfully() {
 
         assertEquals(Message.REGISTRO_ALTERADO_COM_SUCESSO.getMessage(), addOrUpdateUserResponse.getMessage());
+    }
+
+    @Then("should delete user successfully")
+    public void should_delete_user_successfully() {
+
+        assertEquals(Message.REGISTRO_EXCLUIDO_COM_SUCESSO.getMessage(), deleteUserResponse.getMessage());
+    }
+
+    @Then("status code should be {int} for delete user response")
+    public void status_code_should_be_for_add_delete_response(int code) {
+
+        assertEquals(code, deleteUserResponse.getStatusCode());
+    }
+
+    @Then("should return no one record was deleted message error")
+    public void should_return_no_one_record_was_deleted_message_error() {
+
+        assertEquals(Message.NENHUM_REGISTRO_EXCLUIDO.getMessage(), deleteUserResponse.getMessage());
     }
 }
