@@ -73,6 +73,13 @@ public class LoginStepDefinition {
         loginResponse = loginService.login(loginRequest);
     }
 
+    @Given("I perform the login with empty user account")
+    public void i_perform_the_login_with_empty_user_account() {
+
+        loginRequest = loginFactory.buildLoginRequestWithEmptyUserAccount();
+        loginResponse = loginService.login(loginRequest);
+    }
+
     @When("I perform the login")
     public void i_perform_the_login() {
 
@@ -116,5 +123,12 @@ public class LoginStepDefinition {
 
         assertEquals(Message.REQUIRED_EMAIL.getMessage(), loginResponse.getEmailMessageError());
         assertEquals(Message.REQUIRED_PASSWORD.getMessage(), loginResponse.getPasswordMessageError());
+    }
+
+    @Then("should return login user empty fields message error")
+    public void should_return_login_user_empty_fields_message_error() {
+
+        assertEquals(Message.EMPTY_EMAIL.getMessage(), loginResponse.getEmailMessageError());
+        assertEquals(Message.EMPTY_PASSWORD.getMessage(), loginResponse.getPasswordMessageError());
     }
 }

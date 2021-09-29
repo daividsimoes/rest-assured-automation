@@ -24,3 +24,8 @@ Feature: Login API
     Given I perform the login without user account
     Then should return login required fields message error
     And status code should be 400 for login response
+
+  Scenario: Try login with empty user account
+    Given I perform the login with empty user account
+    Then should return login user empty fields message error
+    And status code should be 400 for login response

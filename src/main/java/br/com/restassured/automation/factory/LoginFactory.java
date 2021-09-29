@@ -16,4 +16,12 @@ public class LoginFactory {
 
         return LoginRequest.builder().build();
     }
+
+    public LoginRequest buildLoginRequestWithEmptyUserAccount() {
+
+        return LoginRequest.builder()
+                .email("")
+                .password("")
+                .build();
+    }
 }
