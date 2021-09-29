@@ -7,9 +7,7 @@ import br.com.restassured.automation.model.response.user.UserListResponse;
 import br.com.restassured.automation.model.response.user.UserResponse;
 import br.com.restassured.automation.request.RequestUtil;
 
-public class UserService {
-
-    private RequestUtil requestUtil;
+public class UserService extends AbstractService {
 
     private final String USER = "/usuarios";
 
@@ -26,12 +24,6 @@ public class UserService {
     private final String USER_QUERY_PASSWORD = "/usuarios?password={0}";
 
     private final String USER_ALL_QUERY = "/usuarios?_id={0}&nome={1}&email={2}&password={3}&administrador={4}";
-
-
-    public UserService() {
-
-        requestUtil = new RequestUtil();
-    }
 
     public AddOrUpdateUserResponse addUser(AddOrUpdateUserRequest addOrUpdateUserRequest) {
 

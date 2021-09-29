@@ -290,13 +290,13 @@ public class UserStepDefinition {
     @Then("should return user list Admin message error")
     public void should_return_user_list_admin_message_error() {
 
-        assertEquals(Message.ADMIN_INVALIDO.getMessage(), userListResponse.getAdminMessageError());
+        assertEquals(Message.INVALID_ADMIN.getMessage(), userListResponse.getAdminMessageError());
     }
 
     @Then("should return user list email message error")
     public void should_return_user_list_email_message_error() {
 
-        assertEquals(Message.EMAIL_INVALIDO.getMessage(), userListResponse.getEmailMessageError());
+        assertEquals(Message.INVALID_EMAIL.getMessage(), userListResponse.getEmailMessageError());
     }
 
     @Then("should return user")
@@ -312,56 +312,56 @@ public class UserStepDefinition {
     @Then("should return not found user message error")
     public void should_return_not_found_user_message_error() {
 
-        assertEquals(Message.USUARIO_NAO_ENCONTRADO.getMessage(), userResponse.getMessageError());
+        assertEquals(Message.USER_NOT_FOUND.getMessage(), userResponse.getMessageError());
     }
 
     @Then("should add user successfully")
     public void should_add_user_successfully() {
 
         assertNotNull(addOrUpdateUserResponse.getId());
-        assertEquals(Message.CADASTRO_COM_SUCESSO.getMessage(), addOrUpdateUserResponse.getMessage());
+        assertEquals(Message.REGISTRATION_PERFORMED_SUCCESSFULLY.getMessage(), addOrUpdateUserResponse.getMessage());
     }
 
     @Then("should return add user email message error")
     public void should_return_add_user_email_message_error() {
 
-        assertEquals(Message.EMAIL_INVALIDO.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
+        assertEquals(Message.INVALID_EMAIL.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
     }
 
     @Then("should return add user email already exist message error")
     public void should_return_add_user_email_already_exist_message_error() {
 
-        assertEquals(Message.EMAIL_JA_UTILIZADO.getMessage(), addOrUpdateUserResponse.getMessageError());
+        assertEquals(Message.EMAIL_ALREADY_USED.getMessage(), addOrUpdateUserResponse.getMessageError());
     }
 
     @Then("should return add user required filds message error")
     public void should_return_add_user_required_filds_message_error() {
 
-        assertEquals(Message.NOME_OBRIGATORIO.getMessage(), addOrUpdateUserResponse.getNameMessageError());
-        assertEquals(Message.EMAIL_OBRIGATORIO.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
-        assertEquals(Message.ADMIN_OBRIGATORIO.getMessage(), addOrUpdateUserResponse.getAdminMessageError());
-        assertEquals(Message.PASSWORD_OBRIGATORIO.getMessage(), addOrUpdateUserResponse.getPasswordMessageError());
+        assertEquals(Message.REQUIRED_NAME.getMessage(), addOrUpdateUserResponse.getNameMessageError());
+        assertEquals(Message.REQUIRED_EMAIL.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
+        assertEquals(Message.REQUIRED_ADMIN.getMessage(), addOrUpdateUserResponse.getAdminMessageError());
+        assertEquals(Message.REQUIRED_PASSWORD.getMessage(), addOrUpdateUserResponse.getPasswordMessageError());
     }
 
     @Then("should return add user empty fields message error")
     public void should_return_add_user_empty_fields_message_error() {
 
-        assertEquals(Message.NOME_BRANCO.getMessage(), addOrUpdateUserResponse.getNameMessageError());
-        assertEquals(Message.EMAIL_BRANCO.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
-        assertEquals(Message.ADMIN_INVALIDO.getMessage(), addOrUpdateUserResponse.getAdminMessageError());
-        assertEquals(Message.PASSWORD_BRANCO.getMessage(), addOrUpdateUserResponse.getPasswordMessageError());
+        assertEquals(Message.EMPTY_NAME.getMessage(), addOrUpdateUserResponse.getNameMessageError());
+        assertEquals(Message.EMPTY_EMAIL.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
+        assertEquals(Message.INVALID_ADMIN.getMessage(), addOrUpdateUserResponse.getAdminMessageError());
+        assertEquals(Message.EMPTY_PASSWORD.getMessage(), addOrUpdateUserResponse.getPasswordMessageError());
     }
 
     @Then("should update user successfully")
     public void should_update_user_successfully() {
 
-        assertEquals(Message.REGISTRO_ALTERADO_COM_SUCESSO.getMessage(), addOrUpdateUserResponse.getMessage());
+        assertEquals(Message.RECORD_UPDATED.getMessage(), addOrUpdateUserResponse.getMessage());
     }
 
     @Then("should delete user successfully")
     public void should_delete_user_successfully() {
 
-        assertEquals(Message.REGISTRO_EXCLUIDO_COM_SUCESSO.getMessage(), deleteUserResponse.getMessage());
+        assertEquals(Message.RECORD_DELETED.getMessage(), deleteUserResponse.getMessage());
     }
 
     @Then("status code should be {int} for delete user response")
@@ -373,6 +373,6 @@ public class UserStepDefinition {
     @Then("should return no one record was deleted message error")
     public void should_return_no_one_record_was_deleted_message_error() {
 
-        assertEquals(Message.NENHUM_REGISTRO_EXCLUIDO.getMessage(), deleteUserResponse.getMessage());
+        assertEquals(Message.NO_RECORD_DELETED.getMessage(), deleteUserResponse.getMessage());
     }
 }
