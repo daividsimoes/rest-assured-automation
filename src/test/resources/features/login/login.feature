@@ -7,6 +7,12 @@ Feature: Login API
     Then should login successfully
     And status code should be 200 for login response
 
+  Scenario: Login with valid admin user account
+    Given I have one Admin user account
+    When I perform the login
+    Then should login successfully
+    And status code should be 200 for login response
+
   # Swagger uses status code 400 for this scenario - Test failing
   Scenario: Try login with non existing user account
     Given I perform the login with non existing user account
