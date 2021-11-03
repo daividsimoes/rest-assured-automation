@@ -9,7 +9,6 @@ import br.com.restassured.automation.model.request.product.AddOrUpdateProductReq
 import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
 import br.com.restassured.automation.model.response.login.LoginResponse;
 import br.com.restassured.automation.model.response.product.AddOrUpdateProductResponse;
-import br.com.restassured.automation.model.response.user.AddOrUpdateUserResponse;
 import br.com.restassured.automation.service.LoginService;
 import br.com.restassured.automation.service.ProductService;
 import br.com.restassured.automation.service.UserService;
@@ -60,18 +59,28 @@ public class ProductStepDefinition {
     public void i_have_one_admin_user_logged() {
 
         addOrUpdateUserRequest = addOrUpdateUserFactory.buildAdminAddUserRequest();
-        userService.addUser(addOrUpdateUserRequest);
+        login(addOrUpdateUserRequest);
+    }
 
-        loginRequest = loginFactory.buildLoginRequest(addOrUpdateUserRequest.getEmail(),
-                addOrUpdateUserRequest.getPassword());
+    @Given("I have one non admin user logged")
+    public void i_have_one_non_admin_user_logged() {
 
-        loginResponse = loginService.login(loginRequest);
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAddUserRequest();
+        login(addOrUpdateUserRequest);
     }
 
     @Given("I build one product")
     public void i_build_one_product() {
 
         addOrUpdateProductRequest = addOrUpdateProductFactory.buildProduct();
+    }
+
+    @Given("I add one product")
+    public void i_add_one_product() {
+
+        addOrUpdateProductRequest = addOrUpdateProductFactory.buildProduct();
+        addOrUpdateProductResponse = productService.addProduct(addOrUpdateProductRequest,
+                loginResponse.getAuthorization());
     }
 
     @When("I call add product API")
@@ -81,11 +90,19 @@ public class ProductStepDefinition {
                 loginResponse.getAuthorization());
     }
 
+    @When("I call add product API with invalid token")
+    public void i_call_add_product_API_with_invalid_token() {
+
+        addOrUpdateProductResponse = productService.addProduct(addOrUpdateProductRequest,
+                "Bearer invalid token");
+    }
+
     @Then("should add product successfully")
     public void should_add_product_successfully() {
 
         assertNotNull(addOrUpdateProductResponse.getId());
-        assertEquals(Message.REGISTRATION_PERFORMED_SUCCESSFULLY.getMessage(), addOrUpdateProductResponse.getMessage());
+        assertEquals(Message.REGISTRATION_PERFORMED_SUCCESSFULLY.getMessage(),
+                addOrUpdateProductResponse.getMessage());
 
     }
 
@@ -93,5 +110,35 @@ public class ProductStepDefinition {
     public void status_code_should_be_for_add_product_response(int code) {
 
         assertEquals(code, addOrUpdateProductResponse.getStatusCode());
+    }
+
+    @Then("should return add product email already exist message error")
+    public void should_return_add_user_email_already_exist_message_error() {
+
+        assertEquals(Message.PRODUCT_NAME_ALREADY_EXIST.getMessage(),
+                addOrUpdateProductResponse.getErros().getMessageError());
+    }
+
+    @Then("should return invalid token message error")
+    public void should_return_invalid_token_message_error() {
+
+        assertEquals(Message.INVALID_TOKEN.getMessage(),
+                addOrUpdateProductResponse.getErros().getMessageError());
+    }
+
+    @Then("should return non admin message error")
+    public void should_return_non_admin_message_error() {
+
+        assertEquals(Message.ADMIN_ROUTE.getMessage(),
+                addOrUpdateProductResponse.getErros().getMessageError());
+    }
+
+    private void login(AddOrUpdateUserRequest addOrUpdateUserRequest) {
+
+        userService.addUser(addOrUpdateUserRequest);
+        loginRequest = loginFactory.buildLoginRequest(addOrUpdateUserRequest.getEmail(),
+                addOrUpdateUserRequest.getPassword());
+
+        loginResponse = loginService.login(loginRequest);
     }
 }
