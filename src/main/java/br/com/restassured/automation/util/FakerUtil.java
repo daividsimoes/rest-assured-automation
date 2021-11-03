@@ -2,6 +2,7 @@ package br.com.restassured.automation.util;
 
 import com.github.javafaker.Faker;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 
 public class FakerUtil {
@@ -15,8 +16,7 @@ public class FakerUtil {
 
     public String generateRandomName() {
 
-        return faker.name()
-                .fullName();
+        return faker.name().fullName();
     }
 
     public String generateRandomPassword() {
@@ -28,8 +28,7 @@ public class FakerUtil {
 
     public String generateRandomEmail() {
 
-        return faker.internet()
-                .emailAddress();
+        return faker.internet().emailAddress();
     }
 
     public String generateInvalidEmail() {
@@ -39,7 +38,26 @@ public class FakerUtil {
 
     public String generateRandomUuid() {
 
-        return faker.internet()
-                .uuid();
+        return faker.internet().uuid();
+    }
+
+    public String generateRadomTextDescription() {
+
+        return faker.lorem().sentence();
+    }
+
+    public String generateRadomProduct() {
+
+        return faker.commerce().productName();
+    }
+
+    public BigDecimal generateRadomPrice() {
+
+        return new BigDecimal(faker.commerce().price());
+    }
+
+    public int generateRadomQuantity() {
+
+        return faker.number().randomDigitNotZero();
     }
 }

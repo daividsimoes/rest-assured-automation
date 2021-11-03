@@ -15,7 +15,7 @@ import static io.restassured.RestAssured.given;
 @Slf4j
 public class RequestUtil {
 
-    private HeaderUtil headerUtil;
+    private final HeaderUtil headerUtil;
 
     private String url;
 
@@ -50,6 +50,12 @@ public class RequestUtil {
                                              String endpoint, Object... args) {
 
         return post(headerUtil.getHeader(), body, clazz, endpoint, args);
+    }
+
+    public <T extends ResponseObject> T post(String authorization, Object body, Class<T> clazz,
+                                             String endpoint, Object... args) {
+
+        return post(headerUtil.getHeader(authorization), body, clazz, endpoint, args);
     }
 
     public <T extends ResponseObject> T put(Headers headers, Object body, Class<T> clazz,
@@ -148,7 +154,10 @@ public class RequestUtil {
                 );
             }
         }
-        responseConverted.setStatusCode(response.getStatusCode());
+
+        if(responseConverted != null)
+            responseConverted.setStatusCode(response.getStatusCode());
+
         return responseConverted;
     }
 }

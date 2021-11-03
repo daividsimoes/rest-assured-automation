@@ -3,7 +3,7 @@ package br.com.restassured.automation.factory;
 import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
 import br.com.restassured.automation.util.FakerUtil;
 
-public class AddUserFactory {
+public class AddOrUpdateUserFactory {
 
     FakerUtil fakerUtil = new FakerUtil();
 

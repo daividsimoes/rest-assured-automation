@@ -1,7 +1,7 @@
 package br.com.restassured.automation.test.login;
 
 import br.com.restassured.automation.enums.Message;
-import br.com.restassured.automation.factory.AddUserFactory;
+import br.com.restassured.automation.factory.AddOrUpdateUserFactory;
 import br.com.restassured.automation.factory.LoginFactory;
 import br.com.restassured.automation.model.request.login.LoginRequest;
 import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
@@ -22,7 +22,7 @@ public class LoginStepDefinition {
 
     private UserService userService;
 
-    private AddUserFactory addUserFactory;
+    private AddOrUpdateUserFactory addOrUpdateUserFactory;
 
     private LoginFactory loginFactory;
 
@@ -37,21 +37,21 @@ public class LoginStepDefinition {
 
         userService = new UserService();
         loginService = new LoginService();
-        addUserFactory = new AddUserFactory();
+        addOrUpdateUserFactory = new AddOrUpdateUserFactory();
         loginFactory = new LoginFactory();
     }
 
     @Given("I have one user account")
     public void i_have_one_user_account() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAddUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAddUserRequest();
         userService.addUser(addOrUpdateUserRequest);
     }
 
     @Given("I have one Admin user account")
     public void i_have_one_Admin_user_account() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAdminAddUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAdminAddUserRequest();
         userService.addUser(addOrUpdateUserRequest);
     }
 

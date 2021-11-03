@@ -9,4 +9,11 @@ public class HeaderUtil {
 
         return new Headers(header);
     }
+
+    public Headers getHeader(String authorization) {
+
+        return new Headers(
+                new Header("Authorization", authorization)
+        );
+    }
 }

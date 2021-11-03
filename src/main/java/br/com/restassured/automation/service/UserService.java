@@ -5,25 +5,24 @@ import br.com.restassured.automation.model.response.user.AddOrUpdateUserResponse
 import br.com.restassured.automation.model.response.user.DeleteUserResponse;
 import br.com.restassured.automation.model.response.user.UserListResponse;
 import br.com.restassured.automation.model.response.user.UserResponse;
-import br.com.restassured.automation.request.RequestUtil;
 
 public class UserService extends AbstractService {
 
-    private final String USER = "/usuarios";
+    private static final String USER = "/usuarios";
 
-    private final String USER_ID = "/usuarios/{0}";
+    private static final String USER_ID = "/usuarios/{0}";
 
-    private final String USER_QUERY_ID = "/usuarios?_id={0}";
+    private static final String USER_QUERY_ID = "/usuarios?_id={0}";
 
-    private final String USER_QUERY_ADMIN = "/usuarios?administrador={0}";
+    private static final String USER_QUERY_ADMIN = "/usuarios?administrador={0}";
 
-    private final String USER_QUERY_NAME = "/usuarios?nome={0}";
+    private static final String USER_QUERY_NAME = "/usuarios?nome={0}";
 
-    private final String USER_QUERY_EMAIL = "/usuarios?email={0}";
+    private static final String USER_QUERY_EMAIL = "/usuarios?email={0}";
 
-    private final String USER_QUERY_PASSWORD = "/usuarios?password={0}";
+    private static final String USER_QUERY_PASSWORD = "/usuarios?password={0}";
 
-    private final String USER_ALL_QUERY = "/usuarios?_id={0}&nome={1}&email={2}&password={3}&administrador={4}";
+    private static final String USER_ALL_QUERY = "/usuarios?_id={0}&nome={1}&email={2}&password={3}&administrador={4}";
 
     public AddOrUpdateUserResponse addUser(AddOrUpdateUserRequest addOrUpdateUserRequest) {
 

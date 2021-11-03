@@ -1,7 +1,7 @@
 package br.com.restassured.automation.test.user;
 
 import br.com.restassured.automation.enums.Message;
-import br.com.restassured.automation.factory.AddUserFactory;
+import br.com.restassured.automation.factory.AddOrUpdateUserFactory;
 import br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest;
 import br.com.restassured.automation.model.response.user.AddOrUpdateUserResponse;
 import br.com.restassured.automation.model.response.user.DeleteUserResponse;
@@ -20,7 +20,7 @@ public class UserStepDefinition {
 
     private UserService userService;
 
-    private AddUserFactory addUserFactory;
+    private AddOrUpdateUserFactory addOrUpdateUserFactory;
 
     private AddOrUpdateUserRequest addOrUpdateUserRequest;
 
@@ -33,23 +33,23 @@ public class UserStepDefinition {
     private DeleteUserResponse deleteUserResponse;
 
     @Before("@init")
-    public void before() {
+    public void init() {
 
         userService = new UserService();
-        addUserFactory = new AddUserFactory();
+        addOrUpdateUserFactory = new AddOrUpdateUserFactory();
     }
 
     @Given("I have one user account")
     public void i_have_one_user_account() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAddUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAddUserRequest();
         addOrUpdateUserResponse = userService.addUser(addOrUpdateUserRequest);
     }
 
     @Given("I have one Admin user account")
     public void i_have_one_Admin_user_account() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAdminAddUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAdminAddUserRequest();
         addOrUpdateUserResponse = userService.addUser(addOrUpdateUserRequest);
     }
 
@@ -103,51 +103,51 @@ public class UserStepDefinition {
     @Given("I build one user account")
     public void i_build_one_user_account() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAddUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAddUserRequest();
     }
 
     @Given("I build one admin user account")
     public void i_build_one_admin_user_account() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAdminAddUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAdminAddUserRequest();
     }
 
     @Given("I build one user account with invalid email")
     public void i_build_one_user_account_with_invalid_email() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAddUserRequestWithEmail(new FakerUtil().generateInvalidEmail());
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAddUserRequestWithEmail(new FakerUtil().generateInvalidEmail());
     }
 
     @Given("I build one user account with same email")
     public void i_build_one_user_account_with_same_email() {
 
-        addOrUpdateUserRequest = addUserFactory.buildAddUserRequestWithEmail(addOrUpdateUserRequest.getEmail());
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAddUserRequestWithEmail(addOrUpdateUserRequest.getEmail());
     }
 
     @Given("I build one user account with blank data")
     public void i_build_one_user_account_with_blank_data() {
 
-        addOrUpdateUserRequest = addUserFactory.buildBlankUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildBlankUserRequest();
     }
 
     @Given("I build one user account with empty data")
     public void i_build_one_user_account_with_empty_data() {
 
-        addOrUpdateUserRequest = addUserFactory.buildEmptyUserRequest();
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildEmptyUserRequest();
     }
 
     @Given("I have one user account updated")
     public void i_have_one_user_account_updated() {
 
-        addOrUpdateUserResponse = userService.addUser(addUserFactory.buildAddUserRequest());
-        addOrUpdateUserRequest = addUserFactory.buildAddUserRequest();
+        addOrUpdateUserResponse = userService.addUser(addOrUpdateUserFactory.buildAddUserRequest());
+        addOrUpdateUserRequest = addOrUpdateUserFactory.buildAddUserRequest();
         userService.updateUser(addOrUpdateUserRequest, addOrUpdateUserResponse.getId());
     }
 
     @Given("I have one user account deleted")
     public void i_have_one_user_account_deleted() {
 
-        addOrUpdateUserResponse = userService.addUser(addUserFactory.buildAddUserRequest());
+        addOrUpdateUserResponse = userService.addUser(addOrUpdateUserFactory.buildAddUserRequest());
         userService.deleteUser(addOrUpdateUserResponse.getId());
     }
 
