@@ -15,11 +15,4 @@ public class AddOrUpdateProductResponse extends ResponseObject implements Serial
 
     @JsonProperty("_id")
     private String id;
-
-    @JsonProperty("nome")
-    public void setNome(String message) {
-
-        this.message = message;
-        super.setMessageError(message);
-    }
 }

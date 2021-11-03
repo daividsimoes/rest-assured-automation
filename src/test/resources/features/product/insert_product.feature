@@ -1,3 +1,4 @@
+@init
 Feature: Insert product API
 
   Scenario: Add product
@@ -5,4 +6,4 @@ Feature: Insert product API
     And I build one product
     When I call add product API
     Then should add product successfully
-    And status code should be 201 for add user response
+    And status code should be 201 for add product response

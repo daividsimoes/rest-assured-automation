@@ -15,11 +15,4 @@ public class AddOrUpdateUserResponse extends ResponseObject implements Serializa
 
     @JsonProperty("_id")
     private String id;
-
-    @JsonProperty("message")
-    public void setMessage(String message) {
-
-        this.message = message;
-        super.setMessageError(message);
-    }
 }

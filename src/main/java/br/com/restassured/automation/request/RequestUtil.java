@@ -1,10 +1,12 @@
 package br.com.restassured.automation.request;
 
+import br.com.restassured.automation.model.response.ResponseError;
 import br.com.restassured.automation.model.response.ResponseObject;
 import br.com.restassured.automation.util.JsonUtil;
 import br.com.restassured.automation.util.UrlUtil;
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
+import io.restassured.internal.http.Status;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,13 +54,13 @@ public class RequestUtil {
         return post(headerUtil.getHeader(), body, clazz, endpoint, args);
     }
 
-    public <T extends ResponseObject> T post(String authorization, Object body, Class<T> clazz,
+    public <T extends ResponseObject> T post(String authorization, br.com.restassured.automation.model.request.product.AddOrUpdateProductRequest body, Class<T> clazz,
                                              String endpoint, Object... args) {
 
         return post(headerUtil.getHeader(authorization), body, clazz, endpoint, args);
     }
 
-    public <T extends ResponseObject> T put(Headers headers, Object body, Class<T> clazz,
+    public <T extends ResponseObject> T put(Headers headers, br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest body, Class<T> clazz,
                                             String endpoint, Object... args) {
 
         url = UrlUtil.buildUrl(endpoint, args);
@@ -80,7 +82,7 @@ public class RequestUtil {
         return convertResponseToObject(response, clazz);
     }
 
-    public <T extends ResponseObject> T put(Object body, Class<T> clazz, String endpoint,
+    public <T extends ResponseObject> T put(br.com.restassured.automation.model.request.user.AddOrUpdateUserRequest body, Class<T> clazz, String endpoint,
                                             Object... args) {
 
         return put(headerUtil.getHeader(), body, clazz, endpoint, args);
@@ -145,7 +147,15 @@ public class RequestUtil {
             try {
 
                 log.info("Converting response to class: {}", clazz);
-                responseConverted = response.getBody().as(clazz);
+                if (Status.SUCCESS.matches(response.statusCode())) {
+
+                    responseConverted = response.getBody().as(clazz);
+                } else {
+
+                    responseConverted = clazz.newInstance();
+                    responseConverted.setErros(response.getBody().as(ResponseError.class));
+                }
+
             } catch (Exception e) {
 
                 throw new RuntimeException(

@@ -3,6 +3,9 @@ package br.com.restassured.automation.util;
 import com.github.javafaker.Faker;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 
 public class FakerUtil {
@@ -51,9 +54,9 @@ public class FakerUtil {
         return faker.commerce().productName();
     }
 
-    public BigDecimal generateRadomPrice() {
+    public int generateRadomPrice() {
 
-        return new BigDecimal(faker.commerce().price());
+        return faker.number().numberBetween(1, 10000);
     }
 
     public int generateRadomQuantity() {

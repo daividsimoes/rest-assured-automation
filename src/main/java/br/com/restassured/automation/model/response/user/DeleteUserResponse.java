@@ -10,11 +10,4 @@ import java.io.Serializable;
 public class DeleteUserResponse extends ResponseObject implements Serializable {
 
     private String message;
-
-    @JsonProperty("message")
-    public void setMessage(String message) {
-
-        this.message = message;
-        super.setMessageError(message);
-    }
 }

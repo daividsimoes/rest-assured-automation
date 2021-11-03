@@ -290,13 +290,13 @@ public class UserStepDefinition {
     @Then("should return user list Admin message error")
     public void should_return_user_list_admin_message_error() {
 
-        assertEquals(Message.INVALID_ADMIN.getMessage(), userListResponse.getAdminMessageError());
+        assertEquals(Message.INVALID_ADMIN.getMessage(), userListResponse.getErros().getAdminMessageError());
     }
 
     @Then("should return user list email message error")
     public void should_return_user_list_email_message_error() {
 
-        assertEquals(Message.INVALID_EMAIL.getMessage(), userListResponse.getEmailMessageError());
+        assertEquals(Message.INVALID_EMAIL.getMessage(), userListResponse.getErros().getEmailMessageError());
     }
 
     @Then("should return user")
@@ -312,7 +312,7 @@ public class UserStepDefinition {
     @Then("should return not found user message error")
     public void should_return_not_found_user_message_error() {
 
-        assertEquals(Message.USER_NOT_FOUND.getMessage(), userResponse.getMessageError());
+        assertEquals(Message.USER_NOT_FOUND.getMessage(), userResponse.getErros().getMessageError());
     }
 
     @Then("should add user successfully")
@@ -325,31 +325,31 @@ public class UserStepDefinition {
     @Then("should return add user email message error")
     public void should_return_add_user_email_message_error() {
 
-        assertEquals(Message.INVALID_EMAIL.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
+        assertEquals(Message.INVALID_EMAIL.getMessage(), addOrUpdateUserResponse.getErros().getEmailMessageError());
     }
 
     @Then("should return add user email already exist message error")
     public void should_return_add_user_email_already_exist_message_error() {
 
-        assertEquals(Message.EMAIL_ALREADY_USED.getMessage(), addOrUpdateUserResponse.getMessageError());
+        assertEquals(Message.EMAIL_ALREADY_USED.getMessage(), addOrUpdateUserResponse.getErros().getMessageError());
     }
 
     @Then("should return add user required filds message error")
     public void should_return_add_user_required_filds_message_error() {
 
-        assertEquals(Message.REQUIRED_NAME.getMessage(), addOrUpdateUserResponse.getNameMessageError());
-        assertEquals(Message.REQUIRED_EMAIL.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
-        assertEquals(Message.REQUIRED_ADMIN.getMessage(), addOrUpdateUserResponse.getAdminMessageError());
-        assertEquals(Message.REQUIRED_PASSWORD.getMessage(), addOrUpdateUserResponse.getPasswordMessageError());
+        assertEquals(Message.REQUIRED_NAME.getMessage(), addOrUpdateUserResponse.getErros().getNameMessageError());
+        assertEquals(Message.REQUIRED_EMAIL.getMessage(), addOrUpdateUserResponse.getErros().getEmailMessageError());
+        assertEquals(Message.REQUIRED_ADMIN.getMessage(), addOrUpdateUserResponse.getErros().getAdminMessageError());
+        assertEquals(Message.REQUIRED_PASSWORD.getMessage(), addOrUpdateUserResponse.getErros().getPasswordMessageError());
     }
 
     @Then("should return add user empty fields message error")
     public void should_return_add_user_empty_fields_message_error() {
 
-        assertEquals(Message.EMPTY_NAME.getMessage(), addOrUpdateUserResponse.getNameMessageError());
-        assertEquals(Message.EMPTY_EMAIL.getMessage(), addOrUpdateUserResponse.getEmailMessageError());
-        assertEquals(Message.INVALID_ADMIN.getMessage(), addOrUpdateUserResponse.getAdminMessageError());
-        assertEquals(Message.EMPTY_PASSWORD.getMessage(), addOrUpdateUserResponse.getPasswordMessageError());
+        assertEquals(Message.EMPTY_NAME.getMessage(), addOrUpdateUserResponse.getErros().getNameMessageError());
+        assertEquals(Message.EMPTY_EMAIL.getMessage(), addOrUpdateUserResponse.getErros().getEmailMessageError());
+        assertEquals(Message.INVALID_ADMIN.getMessage(), addOrUpdateUserResponse.getErros().getAdminMessageError());
+        assertEquals(Message.EMPTY_PASSWORD.getMessage(), addOrUpdateUserResponse.getErros().getPasswordMessageError());
     }
 
     @Then("should update user successfully")

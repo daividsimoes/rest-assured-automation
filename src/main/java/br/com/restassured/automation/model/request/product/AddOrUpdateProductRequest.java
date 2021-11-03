@@ -15,7 +15,7 @@ public class AddOrUpdateProductRequest {
 
     private String descricao;
 
-    private BigDecimal preco;
+    private int preco;
 
     private int quantidade;
 }

@@ -21,11 +21,4 @@ public class ProductResponse extends ResponseObject implements Serializable {
 
     @JsonProperty("_id")
     private String id;
-
-    @JsonProperty("nome")
-    public void setNome(String nome) {
-
-        this.nome = nome;
-        super.setNameMessageError(nome);
-    }
 }

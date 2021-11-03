@@ -14,11 +14,4 @@ public class LoginResponse extends ResponseObject implements Serializable {
     private String message;
 
     private String authorization;
-
-    @JsonProperty("message")
-    public void setMessage(String message) {
-
-        this.message = message;
-        super.setMessageError(message);
-    }
 }

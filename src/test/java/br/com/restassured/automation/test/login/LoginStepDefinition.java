@@ -32,6 +32,8 @@ public class LoginStepDefinition {
 
     private LoginResponse loginResponse;
 
+    private static boolean dunit = false;
+
     @Before("@init")
     public void before() {
 
@@ -121,14 +123,14 @@ public class LoginStepDefinition {
     @Then("should return login required fields message error")
     public void should_return_login_required_fields_message_error() {
 
-        assertEquals(Message.REQUIRED_EMAIL.getMessage(), loginResponse.getEmailMessageError());
-        assertEquals(Message.REQUIRED_PASSWORD.getMessage(), loginResponse.getPasswordMessageError());
+        assertEquals(Message.REQUIRED_EMAIL.getMessage(), loginResponse.getErros().getEmailMessageError());
+        assertEquals(Message.REQUIRED_PASSWORD.getMessage(), loginResponse.getErros().getPasswordMessageError());
     }
 
     @Then("should return login user empty fields message error")
     public void should_return_login_user_empty_fields_message_error() {
 
-        assertEquals(Message.EMPTY_EMAIL.getMessage(), loginResponse.getEmailMessageError());
-        assertEquals(Message.EMPTY_PASSWORD.getMessage(), loginResponse.getPasswordMessageError());
+        assertEquals(Message.EMPTY_EMAIL.getMessage(), loginResponse.getErros().getEmailMessageError());
+        assertEquals(Message.EMPTY_PASSWORD.getMessage(), loginResponse.getErros().getPasswordMessageError());
     }
 }
