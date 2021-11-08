@@ -116,21 +116,21 @@ public class ProductStepDefinition {
     public void should_return_add_user_email_already_exist_message_error() {
 
         assertEquals(Message.PRODUCT_NAME_ALREADY_EXIST.getMessage(),
-                addOrUpdateProductResponse.getErros().getMessageError());
+                addOrUpdateProductResponse.getErrors().getMessageError());
     }
 
     @Then("should return invalid token message error")
     public void should_return_invalid_token_message_error() {
 
         assertEquals(Message.INVALID_TOKEN.getMessage(),
-                addOrUpdateProductResponse.getErros().getMessageError());
+                addOrUpdateProductResponse.getErrors().getMessageError());
     }
 
     @Then("should return non admin message error")
     public void should_return_non_admin_message_error() {
 
         assertEquals(Message.ADMIN_ROUTE.getMessage(),
-                addOrUpdateProductResponse.getErros().getMessageError());
+                addOrUpdateProductResponse.getErrors().getMessageError());
     }
 
     private void login(AddOrUpdateUserRequest addOrUpdateUserRequest) {

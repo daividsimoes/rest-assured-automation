@@ -153,7 +153,7 @@ public class RequestUtil {
                 } else {
 
                     responseConverted = clazz.newInstance();
-                    responseConverted.setErros(response.getBody().as(ResponseError.class));
+                    responseConverted.setErrors(response.getBody().as(ResponseError.class));
                 }
 
             } catch (Exception e) {

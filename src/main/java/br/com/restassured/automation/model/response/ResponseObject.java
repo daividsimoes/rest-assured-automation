@@ -11,5 +11,5 @@ public class ResponseObject implements Serializable {
 
     private int statusCode;
 
-    private ResponseError erros;
+    private ResponseError errors;
 }
